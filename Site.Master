@@ -1,0 +1,95 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="WebApplication2.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - Infinity Books</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <style type="text/css">
+        .myClass{
+            display:normal;
+        }
+        .myClass{
+            display:block;
+        }
+    </style>
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" runat="server" href="~/Index.aspx">Infinity Books</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a runat="server" href="~/Index.aspx">Home</a></li>
+                        <li><a runat="server" href="~/Default.aspx">Search</a></li>
+                         <li><a href="AddBooksAdmin.aspx" id="liAdd" class="myClass" runat="server">Add Books</a></li>
+                        <li><a href="EditDeleteBooks.aspx" id="liEdit" class="myClass" runat="server">Delete Books</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <% string username = (String) Session["login"];
+                            //username = "haoming";
+                            if (username == null)
+                            {%>
+                        <li><a href="Login.aspx"><span class="glyphicon glyphicon-user"></span>Log in</a></li>
+                        <li><a runat="server" href="Register.aspx"><span class="glyphicon glyphicon-user"></span>Sign up</a></li>
+                      <%}
+                            else
+                            {%>
+                        <li><a href="Login.aspx"><%=username%></a></li>
+                           <li><a href="CartDetails.aspx?bookid=<%=-1%>">cart</a></li>
+                          <li>
+                        <asp:LinkButton ID="Logout" runat="server" OnClick="Logout_Click">logout</asp:LinkButton></li>
+                        <%}
+                        %> 
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <br />
+            <hr />
+            
+            <footer>
+                <p>&copy; <%: DateTime.Now.Year %> - Infinity Books</p>
+            </footer>
+        </div>
+    </form>
+</body>
+</html>
